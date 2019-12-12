@@ -1,0 +1,3 @@
+rootProject.name = 'bio-sources'
+include ':bio-source-cichlidDB'
+project(':bio-source-cichlidDB').projectDir = new File(settingsDir, './cichlidDB')
