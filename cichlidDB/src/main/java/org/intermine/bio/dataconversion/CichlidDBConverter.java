@@ -24,7 +24,7 @@ import java.sql.Statement;
  * 
  * @author
  */
-public class CichlidDBConverter extends BioDBConverter
+public abstract class CichlidDBConverter extends BioDBConverter
 {
     // 
     private static final String DATASET_TITLE = "Add DataSet.title here";
