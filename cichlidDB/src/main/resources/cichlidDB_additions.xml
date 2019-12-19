@@ -1,7 +1,296 @@
 <?xml version="1.0"?>
 <!-- This file details any extensions needed to the data model to store data from this source, everything else is automatically generated from the model description so this is all we need to do to add to the model. -->
-
 <classes>
 <!-- add any <class> elements here -->
+
+    <class name="Allocation"  is-interface="true">
+      <reference name="individual" referenced-type="Individual"/>
+    <reference name="project" referenced-type="Project"/>
+    </class>
+
+    <class name="Annotations"  is-interface="true">
+      <attribute name="table_name" type="java.lang.String"/>
+      <attribute name="table" type="java.lang.String"/>
+      <attribute name="value" type="java.lang.String"/>
+      <attribute name="unit" type="java.lang.String"/>
+      <reference name="cv" referenced-type="Cv"/>
+    </class>
+
+    <class name="Assembly"  is-interface="true">
+      <attribute name="assembly" type="java.lang.String"/>
+      <attribute name="name" type="java.lang.String"/>
+      <attribute name="accession" type="java.lang.String"/>
+      <attribute name="contig_n50" type="java.lang.String"/>
+      <attribute name="contig_count" type="java.lang.String"/>
+      <attribute name="longest_contig" type="java.lang.String"/>
+      <attribute name="scaffold_n50" type="java.lang.String"/>
+      <attribute name="scaffold_count" type="java.lang.String"/>
+      <attribute name="longest_scaffold" type="java.lang.String"/>
+      <attribute name="length" type="java.lang.String"/>
+      <attribute name="ns" type="java.lang.String"/>
+      <attribute name="gc" type="java.lang.String"/>
+      <attribute name="at" type="java.lang.String"/>
+      <attribute name="stage" type="java.lang.String"/>
+      <attribute name="method" type="java.lang.String"/>
+      <attribute name="assembly_location" type="java.lang.String"/>
+      <attribute name="changed" type="java.util.Date"/>
+      <attribute name="latest" type="java.lang.Boolean"/>
+    <reference name="pipeline" referenced-type="Pipeline"/>
+    <collection name="assembly_dataS" referenced-type="Assembly_data" reverse-reference="assembly"/>
+    </class>
+
+    <class name="Assembly_data"  is-interface="true">
+      <reference name="assembly" referenced-type="Assembly"/>
+      <reference name="lane" referenced-type="Lane"/>
+    </class>
+
+    <class name="Cv"  is-interface="true">
+      <attribute name="cv" type="java.lang.String"/>
+      <attribute name="attribute" type="java.lang.String"/>
+      <attribute name="comment" type="java.lang.String"/>
+      <collection name="annotations" referenced-type="Annotations" reverse-reference="cv"/>
+      <collection name="individual_data" referenced-type="Individual_data" reverse-reference="cv"/>
+    </class>
+
+    <class name="Developmental_stage"  is-interface="true">
+      <attribute name="developmental_stage" type="java.lang.String"/>
+      <attribute name="name" type="java.lang.String"/>
+      <attribute name="ontology" type="java.lang.String"/>
+      <attribute name="accession" type="java.lang.String"/>
+      <reference name="ontology" referenced-type="Ontology"/>
+      <collection name="materials" referenced-type="Material" reverse-reference="developmental_stage"/>
+    </class>
+
+    <class name="Family"  is-interface="true">
+      <attribute name="family" type="java.lang.String"/>
+      <attribute name="name" type="java.lang.String"/>
+      <attribute name="common_name" type="java.lang.String"/>
+      <attribute name="taxon" type="java.lang.String"/>
+    <reference name="order" referenced-type="Tax_order"/>
+      <collection name="speciess" referenced-type="Species" reverse-reference="family"/>
+    </class>
+
+    <class name="File"  is-interface="true">
+      <attribute name="file" type="java.lang.String"/>
+      <attribute name="name" type="java.lang.String"/>
+      <attribute name="format" type="java.lang.String"/>
+      <attribute name="accession" type="java.lang.String"/>
+      <attribute name="type" type="java.lang.String"/>
+      <attribute name="md5" type="java.lang.String"/>
+      <attribute name="nber_reads" type="java.lang.String"/>
+      <attribute name="total_length" type="java.lang.String"/>
+      <attribute name="average_length" type="java.lang.String"/>
+      <attribute name="location" type="java.lang.String"/>
+      <attribute name="changed" type="java.util.Date"/>
+      <attribute name="latest" type="java.lang.Boolean"/>
+      <reference name="lane" referenced-type="Lane"/>
+    </class>
+
+    <class name="Image"  is-interface="true">
+      <attribute name="image" type="java.lang.String"/>
+      <attribute name="filename" type="java.lang.String"/>
+      <attribute name="filepath" type="java.lang.String"/>
+      <attribute name="licence" type="java.lang.String"/>
+      <attribute name="comment" type="java.lang.String"/>
+      <attribute name="changed" type="java.util.Date"/>
+      <attribute name="latest" type="java.lang.Boolean"/>
+      <reference name="provider" referenced-type="Provider"/>
+    <reference name="individual" referenced-type="Individual"/>
+    </class>
+
+    <class name="Individual"  is-interface="true">
+      <attribute name="individual" type="java.lang.String"/>
+      <attribute name="name" type="java.lang.String"/>
+      <attribute name="alias" type="java.lang.String"/>
+      <attribute name="sex" type="java.lang.String"/>
+      <attribute name="accession" type="java.lang.String"/>
+      <attribute name="date_collected" type="java.util.Date"/>
+      <attribute name="collection_method" type="java.lang.String"/>
+      <attribute name="collection_details" type="java.lang.String"/>
+      <attribute name="father" type="java.lang.String"/>
+      <attribute name="mother" type="java.lang.String"/>
+      <attribute name="changed" type="java.util.Date"/>
+      <attribute name="latest" type="java.lang.Boolean"/>
+      <reference name="location" referenced-type="Location"/>
+      <reference name="provider" referenced-type="Provider"/>
+      <reference name="species" referenced-type="Species"/>
+    <collection name="images" referenced-type="Image" reverse-reference="individual"/>
+      <collection name="materials" referenced-type="Material" reverse-reference="individual"/>
+    </class>
+
+    <class name="Individual_data"  is-interface="true">
+      <attribute name="value" type="java.lang.String"/>
+      <attribute name="unit" type="java.lang.String"/>
+      <attribute name="comment" type="java.lang.String"/>
+      <attribute name="changed" type="java.util.Date"/>
+      <attribute name="latest" type="java.lang.Boolean"/>
+      <reference name="cv" referenced-type="Cv"/>
+      <reference name="individual" referenced-type="Individual"/>
+    </class>
+
+    <class name="Lane"  is-interface="true">
+      <attribute name="lane" type="java.lang.String"/>
+      <attribute name="name" type="java.lang.String"/>
+      <attribute name="accession" type="java.lang.String"/>
+      <attribute name="ss_qc_status" type="java.lang.String"/>
+      <attribute name="auto_qc_status" type="java.lang.String"/>
+      <attribute name="manually_withdrawn" type="java.lang.String"/>
+      <attribute name="run_date" type="java.util.Date"/>
+      <attribute name="changed" type="java.util.Date"/>
+      <attribute name="latest" type="java.lang.Boolean"/>
+      <reference name="library" referenced-type="Library"/>
+      <reference name="sample" referenced-type="Sample"/>
+      <reference name="seq_centre" referenced-type="Seq_centre"/>
+      <reference name="seq_tech" referenced-type="Seq_tech"/>
+      <collection name="files" referenced-type="File" reverse-reference="lane"/>
+      <collection name="assemblies" referenced-type="Assembly_data" reverse-reference="lane"/>
+    </class>
+
+    <class name="Library"  is-interface="true">
+      <attribute name="library" type="java.lang.String"/>
+      <attribute name="name" type="java.lang.String"/>
+      <attribute name="ssid" type="java.lang.String"/>
+      <attribute name="changed" type="java.util.Date"/>
+      <attribute name="latest" type="java.lang.Boolean"/>
+      <reference name="library_type" referenced-type="Library_type"/>
+      <collection name="lanes" referenced-type="Lane" reverse-reference="library"/>
+    </class>
+
+    <class name="Library_type"  is-interface="true">
+      <attribute name="library_type" type="java.lang.String"/>
+      <attribute name="name" type="java.lang.String"/>
+      <collection name="libraries" referenced-type="Library" reverse-reference="library_type"/>
+    </class>
+
+    <class name="Location"  is-interface="true">
+      <attribute name="location" type="java.lang.String"/>
+      <attribute name="country_of_origin" type="java.lang.String"/>
+      <attribute name="main_location" type="java.lang.String"/>
+      <attribute name="sub_location" type="java.lang.String"/>
+      <attribute name="latitude" type="java.lang.String"/>
+      <attribute name="longitude" type="java.lang.String"/>
+      <collection name="individuals" referenced-type="Individual" reverse-reference="location"/>
+    </class>
+
+    <class name="Material"  is-interface="true">
+      <attribute name="material" type="java.lang.String"/>
+      <attribute name="accession" type="java.lang.String"/>
+      <attribute name="name" type="java.lang.String"/>
+      <attribute name="date_received" type="java.util.Date"/>
+      <attribute name="storage_condition" type="java.lang.String"/>
+      <attribute name="storage_location" type="java.lang.String"/>
+      <attribute name="type" type="java.lang.String"/>
+      <attribute name="volume" type="java.lang.String"/>
+      <attribute name="concentration" type="java.lang.String"/>
+      <attribute name="changed" type="java.util.Date"/>
+      <attribute name="latest" type="java.lang.Boolean"/>
+      <reference name="individual" referenced-type="Individual"/>
+    <reference name="provider" referenced-type="Provider"/>
+      <reference name="developmental_stage" referenced-type="Developmental_stage"/>
+      <reference name="organism_part" referenced-type="Organism_part"/>
+      <collection name="samples" referenced-type="Sample" reverse-reference="material"/>
+    </class>
+
+    <class name="Ontology"  is-interface="true">
+      <attribute name="ontology" type="java.lang.String"/>
+      <attribute name="name" type="java.lang.String"/>
+      <attribute name="ontology_name" type="java.lang.String"/>
+      <collection name="organism_parts" referenced-type="Organism_part" reverse-reference="ontology"/>
+      <collection name="development_stages" referenced-type="Developmental_stage" reverse-reference="ontology"/>
+    </class>
+
+    <class name="Organism_part"  is-interface="true">
+      <attribute name="organism_part" type="java.lang.String"/>
+      <attribute name="name" type="java.lang.String"/>
+      <attribute name="accession" type="java.lang.String"/>
+      <reference name="ontology" referenced-type="Ontology"/>
+      <collection name="materials" referenced-type="Material" reverse-reference="organism_part"/>
+    </class>
+
+    <class name="Pipeline"  is-interface="true">
+      <attribute name="pipeline" type="java.lang.String"/>
+      <attribute name="name" type="java.lang.String"/>
+      <attribute name="comments" type="java.lang.String"/>
+      <collection name="assemblies" referenced-type="Assembly" reverse-reference="pipeline"/>
+    </class>
+
+    <class name="Project"  is-interface="true">
+      <attribute name="project" type="java.lang.String"/>
+      <attribute name="name" type="java.lang.String"/>
+      <attribute name="alias" type="java.lang.String"/>
+      <attribute name="accession" type="java.lang.String"/>
+      <attribute name="ssid" type="java.lang.String"/>
+      <collection name="allocations" referenced-type="Allocation" reverse-reference="project"/>
+    </class>
+
+    <class name="Provider"  is-interface="true">
+        <attribute name="provider" type="java.lang.String"/>
+        <attribute name="provider_name" type="java.lang.String"/>
+        <attribute name="email" type="java.lang.String"/>
+        <attribute name="affiliation" type="java.lang.String"/>
+        <attribute name="address" type="java.lang.String"/>
+        <attribute name="phone" type="java.lang.String"/>
+        <attribute name="changed" type="java.util.Date"/>
+        <attribute name="latest" type="java.lang.Boolean"/>
+        <collection name="individuals" referenced-type="Individual" reverse-reference="provider"/>
+        <collection name="materials" referenced-type="Material" reverse-reference="provider"/>
+      </class>
+
+    <class name="Sample"  is-interface="true">
+        <attribute name="sample" type="java.lang.String"/>
+        <attribute name="accession" type="java.lang.String"/>
+        <attribute name="ssid" type="java.lang.String"/>
+        <attribute name="name" type="java.lang.String"/>
+        <attribute name="public_name" type="java.lang.String"/>
+        <attribute name="changed" type="java.util.Date"/>
+        <attribute name="latest" type="java.lang.Boolean"/>
+        <reference name="material" referenced-type="Material"/>
+        <collection name="lanes" referenced-type="Lane" reverse-reference="sample"/>
+    </class>
+
+    <class name="Seq_centre"  is-interface="true">
+        <attribute name="seq_centre" type="java.lang.String"/>
+        <attribute name="name" type="java.lang.String"/>
+        <collection name="lanes" referenced-type="Lane" reverse-reference="seq_centre"/>
+    </class>
+
+    <class name="Seq_tech"  is-interface="true">
+        <attribute name="seq_tech" type="java.lang.String"/>
+        <attribute name="name" type="java.lang.String"/>
+        <collection name="lanes" referenced-type="Lane" reverse-reference="seq_tech"/>
+    </class>
+
+    <class name="Species"  is-interface="true">
+      <attribute name="species" type="java.lang.String"/>
+      <attribute name="name" type="java.lang.String"/>
+      <attribute name="strain" type="java.lang.String"/>
+      <attribute name="taxon" type="java.lang.String"/>
+      <attribute name="common_name" type="java.lang.String"/>
+      <attribute name="karyotype" type="java.lang.String"/>
+      <attribute name="ploidy" type="java.lang.String"/>
+      <attribute name="taxon_position" type="java.lang.String"/>
+      <attribute name="genome_size" type="java.lang.String"/>
+      <attribute name="iucn" type="java.lang.String"/>
+      <attribute name="changed" type="java.util.Date"/>
+      <attribute name="latest" type="java.lang.Boolean"/>
+    <reference name="family" referenced-type="Family"/>
+      <collection name="individuals" referenced-type="Individual" reverse-reference="species"/>
+    </class>
+
+    <class name="Tax_order"  is-interface="true">
+      <attribute name="order" type="java.lang.String"/>
+      <attribute name="name" type="java.lang.String"/>
+      <attribute name="common_name" type="java.lang.String"/>
+      <attribute name="taxon" type="java.lang.String"/>
+      <collection name="families" referenced-type="Family" reverse-reference="order"/>
+    </class>
+
+    <class name="Users"  is-interface="true">
+      <attribute name="user" type="java.lang.String"/>
+      <attribute name="username" type="java.lang.String"/>
+      <attribute name="email" type="java.lang.String"/>
+      <attribute name="password" type="java.lang.String"/>
+    </class>
+
 
 </classes>
