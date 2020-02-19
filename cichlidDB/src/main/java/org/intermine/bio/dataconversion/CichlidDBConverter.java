@@ -21,23 +21,23 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * 
+ *
  * @author
  */
 public abstract class CichlidDBConverter extends BioDBConverter
 {
-    // 
+    //
     private static final String DATASET_TITLE = "Add DataSet.title here";
     private static final String DATA_SOURCE_NAME = "Add DataSource.name here";
 
 
     /**
-     * Construct a new CichlidDBConverter.
+     * Construct a new CichlidmineConverter.
      * @param database the database to read from
      * @param model the Model used by the object store we will write to with the ItemWriter
      * @param writer an ItemWriter used to handle Items created
      */
-    public CichlidDBConverter(Database database, Model model, ItemWriter writer) {
+    public CichlidmineConverter(Database database, Model model, ItemWriter writer) {
         super(database, model, writer, DATA_SOURCE_NAME, DATASET_TITLE);
     }
 
@@ -46,17 +46,18 @@ public abstract class CichlidDBConverter extends BioDBConverter
      * {@inheritDoc}
      */
     public void process() throws Exception {
-        // a database has been initialised from properties starting with db.cichlidDB
+        // a database has been initialised from properties starting with db.cichlidmine
 
         Connection connection = getDatabase().getConnection();
 
         // process data with direct SQL queries on the source database, for example:
-        
-        // Statement stmt = connection.createStatement();
-        // String query = "select column from table;";
-        // ResultSet res = stmt.executeQuery(query);
-        // while (res.next()) {
-        // }   
+
+        Statement stmt = connection.createStatement();
+        String query = "select * from project;";
+        ResultSet res = stmt.executeQuery(query);
+        while (res.next()) {
+          System.out.println(res);
+        }
     }
 
     /**
