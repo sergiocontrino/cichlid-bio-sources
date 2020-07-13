@@ -14,6 +14,7 @@ import org.intermine.dataconversion.ItemWriter;
 import org.intermine.metadata.Model;
 import org.intermine.sql.Database;
 import org.intermine.xml.full.Item;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -26,18 +27,19 @@ import java.sql.Statement;
  */
 public abstract class CichlidDBConverter extends BioDBConverter
 {
+    private static final Logger LOG = Logger.getLogger(CichlidDBConverter.class);
     //
     private static final String DATASET_TITLE = "Add DataSet.title here";
     private static final String DATA_SOURCE_NAME = "Add DataSource.name here";
 
 
     /**
-     * Construct a new CichlidmineConverter.
+     * Construct a new CichlidDBConverter.
      * @param database the database to read from
      * @param model the Model used by the object store we will write to with the ItemWriter
      * @param writer an ItemWriter used to handle Items created
      */
-    public CichlidmineConverter(Database database, Model model, ItemWriter writer) {
+    public CichlidDBConverter(Database database, Model model, ItemWriter writer) {
         super(database, model, writer, DATA_SOURCE_NAME, DATASET_TITLE);
     }
 
@@ -46,19 +48,27 @@ public abstract class CichlidDBConverter extends BioDBConverter
      * {@inheritDoc}
      */
     public void process() throws Exception {
-        // a database has been initialised from properties starting with db.cichlidmine
+        // a database has been initialised from properties starting with db.cichlidDB
 
         Connection connection = getDatabase().getConnection();
 
         // process data with direct SQL queries on the source database, for example:
 
         Statement stmt = connection.createStatement();
-        String query = "select * from project;";
+        String query = "select name, accession, ssid from project;";
         ResultSet res = stmt.executeQuery(query);
+
+        //ResultSet res = getDeleted(connection);
         while (res.next()) {
-          System.out.println(res);
+            Integer submissionId = new Integer(res.getInt("experiment_id"));
+            String name = res.getString("name");
+            String accession = res.getString("accession");
+            String ssid = res.getString("ssid");
+            LOG.info("XX " + accession + " | " + ssid);
         }
-    }
+        res.close();
+
+        }
 
     /**
      * {@inheritDoc}
