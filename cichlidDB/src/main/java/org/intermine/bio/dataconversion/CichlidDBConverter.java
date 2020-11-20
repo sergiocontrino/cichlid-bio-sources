@@ -29,8 +29,8 @@ public class CichlidDBConverter extends BioDBConverter
 {
     private static final Logger LOG = Logger.getLogger(CichlidDBConverter.class);
     //
-    private static final String DATASET_TITLE = "Add DataSet.title here";
-    private static final String DATA_SOURCE_NAME = "Add DataSource.name here";
+    private static final String DATASET_TITLE = "Cichlid dataset";
+    private static final String DATA_SOURCE_NAME = "Cichlid datasource";
 
     private String licence;
 
@@ -56,13 +56,14 @@ public class CichlidDBConverter extends BioDBConverter
         // process data with direct SQL queries on the source database, for example:
 
         Statement stmt = connection.createStatement();
-        String query = "select name, accession, ssid from project;";
+        String query = "select project_id, name, alias, accession, ssid from project;";
         ResultSet res = stmt.executeQuery(query);
 
         //ResultSet res = getDeleted(connection);
         while (res.next()) {
-            Integer submissionId = new Integer(res.getInt("experiment_id"));
+            Integer submissionId = new Integer(res.getInt("project_id"));
             String name = res.getString("name");
+            String alias = res.getString("alias");
             String accession = res.getString("accession");
             String ssid = res.getString("ssid");
             LOG.info("XX " + accession + " | " + ssid);
