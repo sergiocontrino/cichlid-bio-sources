@@ -67,6 +67,15 @@ public class CichlidDBConverter extends BioDBConverter
             String accession = res.getString("accession");
             String ssid = res.getString("ssid");
             LOG.info("XX " + accession + " | " + ssid);
+
+            Item project = createItem("Project");
+            project.setAttributeIfNotNull("name", name);
+            project.setAttributeIfNotNull("alias", alias);
+            project.setAttributeIfNotNull("accession", accession);
+            project.setAttributeIfNotNull("ssid", ssid);
+ 
+           Integer pId = store(project);
+
         }
         res.close();
 
