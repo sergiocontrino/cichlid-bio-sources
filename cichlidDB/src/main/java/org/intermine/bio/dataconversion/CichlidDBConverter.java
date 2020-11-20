@@ -25,13 +25,14 @@ import java.sql.Statement;
  *
  * @author
  */
-public abstract class CichlidDBConverter extends BioDBConverter
+public class CichlidDBConverter extends BioDBConverter
 {
     private static final Logger LOG = Logger.getLogger(CichlidDBConverter.class);
     //
     private static final String DATASET_TITLE = "Add DataSet.title here";
     private static final String DATA_SOURCE_NAME = "Add DataSource.name here";
 
+    private String licence;
 
     /**
      * Construct a new CichlidDBConverter.
@@ -69,6 +70,26 @@ public abstract class CichlidDBConverter extends BioDBConverter
         res.close();
 
         }
+
+    /**
+     * Set the data licence for these data.
+     *
+     * @param licence should be URI to data licence.
+     */
+//    public void setLicence(String licence) {
+//        this.licence = licence;
+//    }
+
+    /**
+     * Get the data licence for these data.
+     *
+     * @return URI to data licence.
+     */
+    public String getLicence() {
+        return licence;
+    }
+
+
 
     /**
      * {@inheritDoc}
